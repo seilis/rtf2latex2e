@@ -2,6 +2,8 @@ VERSION = 2-2-3
 
 CC:=gcc
 
+CFLAGS := $(CFLAGS) -I$(srcdir)/src
+
 #reasonable default set of compiler flags while developing
 #CFLAGS = -g -D_FORTIFY_SOURCE=2 -Wall -Waggregate-return -Wmissing-declarations -Wmissing-prototypes -Wredundant-decls -Wshadow -Wstrict-prototypes -Wformat=2
 
@@ -43,7 +45,7 @@ prefsdir    ?= $(datadir)/$(package-name)
 SRCS         = src/cole.c                 src/cole_decode.c          src/cole_support.c      \
                src/eqn.c                  src/main.c                 src/mygetopt.c          \
                src/reader.c               src/writer.c               src/init.c
-               
+
 HDRS         = src/cole.h                 src/cole_support.h         src/eqn.h               \
                src/eqn_support.h          src/mygetopt.h             src/rtf2latex2e.h       \
                src/rtf.h                  src/init.h
@@ -64,7 +66,7 @@ PREFS        = pref/latex-encoding                pref/latex-encoding.mac       
                pref/rtf-ctrl                      pref/r2l-head                      \
                pref/r2l-map                       pref/r2l-pref                      \
                pref/cp936raw.txt                  pref/cp932raw.txt                  \
-               pref/rtf-encoding.cp1251           
+               pref/rtf-encoding.cp1251
 
 DOCS         = doc/GPL_license      doc/ChangeLog     \
                doc/rtf2latexDoc.tex doc/rtf2latex2e.1 \
@@ -73,8 +75,8 @@ DOCS         = doc/GPL_license      doc/ChangeLog     \
 WEB          = doc/web/style.css    doc/web/docs.html \
                doc/web/index.html   doc/web/logo.png  \
                doc/web/arrow.gif
-               
-PDFS         = doc/rtf2latexDoc.pdf  
+
+PDFS         = doc/rtf2latexDoc.pdf
 
 TEST         = test/Makefile              test/arch.rtf              test/arch-mac.rtf       \
                test/equation.rtf          test/fig-jpeg.rtf          test/multiline.rtf      \
@@ -87,7 +89,7 @@ TEST         = test/Makefile              test/arch.rtf              test/arch-m
                test/RtfInterpreterTest_2.rtf  test/RtfInterpreterTest_6.rtf  test/RtfInterpreterTest_10.rtf \
                test/RtfInterpreterTest_3.rtf  test/RtfInterpreterTest_7.rtf  test/RtfInterpreterTest_11.rtf \
                test/RtfInterpreterTest_12.rtf test/RtfInterpreterTest_13.rtf test/RtfInterpreterTest_14.rtf \
-               test/RtfInterpreterTest_15.rtf test/RtfInterpreterTest_16.rtf test/RtfInterpreterTest_17.rtf 
+               test/RtfInterpreterTest_15.rtf test/RtfInterpreterTest_16.rtf test/RtfInterpreterTest_17.rtf
 
 RTFD         = test/sample.rtfd/TXT.rtf      test/sample.rtfd/amiga.gif \
                test/sample.rtfd/build.tiff   test/sample.rtfd/button_smile.jpeg \
@@ -97,7 +99,7 @@ EQNS         = test/testeqn01.eqn         test/testeqn02.eqn         test/testeq
                test/testeqn04.eqn         test/testeqn05.eqn         test/testeqn06.eqn      \
                test/testeqn07.eqn         test/testeqn08.eqn         test/testeqn09.eqn      \
                test/testeqn10.eqn
-               
+
 OBJS         = src/cole.o                 src/cole_decode.o          src/cole_support.o      \
                src/eqn.o                  src/main.o                 src/mygetopt.o          \
                src/reader.o               src/tokenscan.o            src/writer.o            \
@@ -177,16 +179,16 @@ dist: checkfiles doc $(SRCS) $(RTFPREP_SRC) $(HDRS) $(README) $(PREFS) $(TEST) $
 	tar cvf - rtf2latex2e-$(VERSION) | gzip > rtf2latex2e-$(VERSION).tar.gz
 #	zip -r rtf2latex2e-$(VERSION) rtf2latex2e-$(VERSION)
 	rm -rf rtf2latex2e-$(VERSION)
-	
+
 install: rtf2latex2e
 	mkdir -p                $(DESTDIR)$(bindir)
 	mkdir -p                $(DESTDIR)$(datadir)/$(package-name)
 	mkdir -p                $(DESTDIR)$(mandir)/man1
-	
+
 	cp -f -p $(PREFS)             $(DESTDIR)$(datadir)/$(package-name)
 	cp -f -p doc/rtf2latex2e.1    $(DESTDIR)$(mandir)/man1
 	cp -f -p $(BINARY_NAME)       $(DESTDIR)$(bindir)
-	
+
 	@echo "******************************************************************"
 	@echo "*** rtf2latex2e successfully installed as \"$(BINARY_NAME)\""
 	@echo "*** in directory \"$(bindir)\""
@@ -203,16 +205,16 @@ install: rtf2latex2e
 install-prefs:
 	cp -f -p $(PREFS)             $(DESTDIR)$(datadir)/$(package-name)
 
-install-pdf: 
+install-pdf:
 	mkdir -p $(pdfdir)
 	cp -f -p doc/rtfReader.pdf    $(DESTDIR)$(pdfdir)
 	cp -f -p doc/rtf2latexDoc.pdf $(DESTDIR)$(pdfdir)
 
-clean: 
+clean:
 	rm -f $(OBJS) $(RTFPREP_OBJS) $(BINARY_NAME) rtf2latex
 	cd test   && make clean
 	cd doc    && make clean
-	
+
 realclean: checkfiles clean
 	rm -f makefile.depend
 	rm -f src/rtfprep
@@ -222,7 +224,7 @@ realclean: checkfiles clean
 parser: checkfiles clean
 	rm -f src/rtfprep
 	rm -f src/rtf-ctrldef.h  src/rtf-namedef.h  src/stdcharnames.h src/rtf-ctrl
-	make src/rtfprep	
+	make src/rtfprep
 	cd src && ./rtfprep
 	mv src/rtf-ctrl pref/rtf-ctrl
 
@@ -230,8 +232,8 @@ appleclean:
 	sudo xattr -r -d com.apple.FinderInfo ./
 	sudo xattr -r -d com.apple.TextEncoding ./
 	sudo xattr -r -d com.apple.quarantine ./
-	
-splint: 
+
+splint:
 	splint -weak $(SRCS) $(HDRS)
-	
+
 .PHONY: all checkfiles clean depend dist doc install realclean test

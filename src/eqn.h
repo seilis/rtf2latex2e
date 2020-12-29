@@ -5,10 +5,10 @@
 # define DISPLAY_EQUATION 0
 # define INLINE_EQUATION 1
 
-char *eqn_start_inline;
-char *eqn_end_inline;
-char *eqn_start_display;
-char *eqn_end_display;
+static char *eqn_start_inline;
+static char *eqn_end_inline;
+static char *eqn_start_display;
+static char *eqn_end_display;
 
 struct EQN_OLE_FILE_HDR {
     uint16_t   cbHdr;     /* length of header, sizeof(EQNOLEFILEHDR) = 28 bytes */

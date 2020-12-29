@@ -30,6 +30,8 @@
 #include <stdio.h>
 #include <stdint.h>
 
+#define FILENAME_LEN 17
+
 uint16_t fil_sreadU16 (uint8_t * in);
 uint32_t fil_sreadU32 (uint8_t * in);
 
@@ -152,7 +154,7 @@ void hexdump(void *ptr, void *zero, uint32_t length, char *msg);
 struct pps_block
   {
     char name[0x20];
-    char filename[L_tmpnam+1]; /* valid only if type == 2 */
+    char filename[FILENAME_LEN]; /* valid only if type == 2 */
     uint8_t type;			 /* 5 == root, 1 == dir, 2 == file */
     uint32_t size;	 		 /* the size of the file, valid only if type == 2 */
     uint32_t next;	 		 /* next entry in this level, this directory */

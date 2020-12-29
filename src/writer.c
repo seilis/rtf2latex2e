@@ -2524,8 +2524,8 @@ static void IncludeGraphics(char *pictureType)
     int displayFigure = 0;
     int isOpenOfficePDF = 0;
     int pictConverted = 0;
-    static pict2pdf_exists = -1;
-    static unoconv_exists = -1;
+    static int pict2pdf_exists = -1;
+    static int unoconv_exists = -1;
 
     /* it seems that when cropping is -4319 or -6084 the picture is empty */
     if (picture.cropTop<-1000) {

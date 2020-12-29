@@ -70,12 +70,11 @@ __cole_extract_file(FILE ** file, char **filename, uint32_t size, uint32_t pps_s
     uint8_t Block[0x0200];
 
     /* allocate temporary file name */
-    *filename = malloc((size_t) (L_tmpnam+1));
+    *filename = malloc((size_t) (FILENAME_LEN));
     if (*filename == NULL)
         return 1;
 
-    /* use tmpnam to fill the file name */
-    if (tmpnam(*filename) == NULL) {
+    if (mkstemp(*filename) < 0) {
         free(*filename);
         return 2;
     }
@@ -85,13 +84,9 @@ __cole_extract_file(FILE ** file, char **filename, uint32_t size, uint32_t pps_s
     /* try to open the file */
     ret = fopen(*filename, "w+b");
 
-    /* if opening fails, then try again using tempnam() */
     if (ret == NULL) {
         free(*filename);
-        *filename = tempnam("./", "rtf2latex-tmp-");
-        verboseS(*filename);
-        ret = fopen(*filename, "w+b");
-        if (*filename == NULL) return 2;
+        return 2;
     }
 
     *file = ret;

@@ -407,31 +407,22 @@ __OLEdecode(char *OLEfilename, pps_entry ** stream_list, size_t * root,
                 assert(i == *root);
                 assert(i == 0);
 
-                *_sbfilename = malloc((size_t) (L_tmpnam+1));
+                *_sbfilename = malloc((size_t)FILENAME_LEN);
                 test_exitf(*_sbfilename != NULL, 10, ends());
-                (void) tmpnam(*_sbfilename);
+
+                sprintf(*_sbfilename, "rtf2ltx-XXXXXX");
+
+                (void) mkstemp(*_sbfilename);
                 verboseS(*_sbfilename);
 
                 test_exitf(*_sbfilename[0], 7, ends());
                 OLEfile = fopen(*_sbfilename, "wb+");
 
-                /* if opening fails, then try again using tempnam() */
+                /* if opening fails, then give up */
                 if (OLEfile == NULL) {
                     free(*_sbfilename);
-                    *_sbfilename = tempnam("./", "rtf2latex-tmp-");
-                    verboseS(*_sbfilename);
-                    if (*_sbfilename == NULL) return 2;
-                    test_exitf(_sbfilename != NULL, 10, ends());
-                    OLEfile = fopen(*_sbfilename, "wb+");
+                    return 2; /* Same as in __cole_extract_file */
                  }
-
-                /* if opening fails, then try again using tempnam() */
-                if (OLEfile == NULL) {
-                    char *pp = tempnam("./", *_sbfilename);
-                    test_exitf(pp != NULL, 10, ends());
-                    strcpy(*_sbfilename,pp);
-                    OLEfile = fopen(*_sbfilename, "wb+");
-                }
 
                 sbfile = OLEfile;
                 *_sbfile = sbfile;
