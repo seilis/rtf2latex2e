@@ -1,4 +1,11 @@
-Release 2-2-3 adds the option to delimit LaTeX equations 
+NOTE: This is a fork of rtf2latex2e which is available from:
+
+https://sourceforge.net/projects/rtf2latex2e/
+
+
+Release 2.2.4 fixes compilation failures on modern GCC
+
+Release 2-2-3 adds the option to delimit LaTeX equations
 by \(...\) instead of $...$ and \[...\] instead of $$...$$
 
 Release 2-2-2 adds conversion of Word's EQ fields
@@ -24,17 +31,17 @@ WHAT YOU WILL GET:
 =============
 rtf2latex2e converts an RTF file to LaTeX and saves any image
 files found inside.  Using pdflatex on the resulting latex
-file will require that these images be converted by you to 
-some image format supported by pdflatex. 
+file will require that these images be converted by you to
+some image format supported by pdflatex.
 
-If you expect a WYSIWYG reproduction of your RTF file, you may be 
-disappointed. My main concerns have been translating the essential 
-features of the RTF file such as characters, figures, tables, and 
-equations (as pictures).  I have largely ignored visual formatting 
-such as ruler positions, tabs, paragraph indentations, and other fluff.  
-Expect the output LaTeX file to require manual editing to put the finishing 
-touches.  I just want to make that task a little easier.  In my opinion, 
-expecting a WYSIWYG reproduction is not practical and misses the point 
+If you expect a WYSIWYG reproduction of your RTF file, you may be
+disappointed. My main concerns have been translating the essential
+features of the RTF file such as characters, figures, tables, and
+equations (as pictures).  I have largely ignored visual formatting
+such as ruler positions, tabs, paragraph indentations, and other fluff.
+Expect the output LaTeX file to require manual editing to put the finishing
+touches.  I just want to make that task a little easier.  In my opinion,
+expecting a WYSIWYG reproduction is not practical and misses the point
 entirely.
 
 The user has some control over how good the visual fidelity is.  For
@@ -54,9 +61,9 @@ needed to identify paragraphs that should not be indented, etc.,  Finally
 prompt> rtf2latex2e -b test/test.rtf
 
 will try all sorts of things to get the formatting correct.  This comes
-at the expense of extensive formatting ``noise.'' 
+at the expense of extensive formatting ``noise.''
 
-Typeset the rtf2latexDoc.tex for more information, or print out the 
+Typeset the rtf2latexDoc.tex for more information, or print out the
 rtf2latexDoc.pdf file. They are in the documentation directory.
 
 The file Release-notes.txt usually has more up-to-date info.
@@ -67,9 +74,9 @@ rtf2latex2e was developed on under Mac OS X but should compile
 under any Unix variant.  Windows users should compile under something
 like MinGW.
 
-As of version 2.2.0, rtf2latex2e uses unoconv to convert EMF, WMF, 
+As of version 2.2.0, rtf2latex2e uses unoconv to convert EMF, WMF,
 and PICT images to PDF files.  unoconv in turn use LibreOffice to
-do the actual conversion.  
+do the actual conversion.
 
 To build rtf2latex2e, change to the Unix directory directory, type:
 
@@ -80,27 +87,27 @@ make install (optional, as root)
 By default the executable is installed as /usr/local/bin/rtf2latex2e.
 Support files will installed in /usr/local/share/rtf2latex2e
 
-You can change the directory into which rtf2latex2e is installed by editing the 
-variable PREFIX in the Makefile. You may need to become 
-super-user to install into that directory. If you do not have super-user 
-privileges, you can change the PREFIX to somewhere in your home directory, 
-say $(HOME)/rtf2latex2e. 
+You can change the directory into which rtf2latex2e is installed by editing the
+variable PREFIX in the Makefile. You may need to become
+super-user to install into that directory. If you do not have super-user
+privileges, you can change the PREFIX to somewhere in your home directory,
+say $(HOME)/rtf2latex2e.
 
 WINDOWS:
 --------
-Windows users get a pre-compiled binary rtf2latex2e.exe to be run 
-from the MS-DOS prompt. 
+Windows users get a pre-compiled binary rtf2latex2e.exe to be run
+from the MS-DOS prompt.
 
 
 THE r2l-pref PREFERENCE FILE:
 =============================
-rtf2latex2e reads a preference file r2l-pref that allows one to specify 
+rtf2latex2e reads a preference file r2l-pref that allows one to specify
 many settings.  Read the comments in the preference file for details.
 
 THE r2l-head file:
 ==================
 Allows you to insert text directly into the preamble of the converted
-doument.  
+doument.
 
 THE r2l-map file:
 ==================
@@ -110,11 +117,11 @@ are only three styles defined at the moment.  These convert the style
 
 LEGAL STUFF:
 ============
-(c) Ujwal S. Sathyam and Scott A. Prahl, 1999, 
+(c) Ujwal S. Sathyam and Scott A. Prahl, 1999,
 (c) Scott A. Prahl, 2012
 
-The author provides this software as is and does not take any responsibility 
-for the consequences of running it (unless it is good, of course...). This is 
+The author provides this software as is and does not take any responsibility
+for the consequences of running it (unless it is good, of course...). This is
 beta software, so treat it as such.
 
 This program is free software; you can redistribute it and/or
@@ -127,5 +134,5 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 The writer and driver parts of the code are copyright Ujwal Sathyam.
-The reader part of the code was written by Paul DuBois of the Univ. of 
-Wisconsin Primate Center. 
+The reader part of the code was written by Paul DuBois of the Univ. of
+Wisconsin Primate Center.
