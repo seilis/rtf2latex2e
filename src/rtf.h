@@ -375,11 +375,11 @@ char		*RTFStdCharName (short code);
 short	RTFMapChar (short c);
 short	RTFGetCharSet(void);
 void RTFSetCharSet(short csId);
-short 	RTFReadOutputMap(char *file, char *outMap[], short reinit); 
+short 	RTFReadOutputMap(char *file, char *outMap[], short reinit);
 
 void RTFInitStack(void);
 void RTFPushStack (void);
-void RTFPopStack (void); 
+void RTFPopStack (void);
 void RTFStoreStack (void);
 void RTFRestoreStack (void);
 
@@ -392,7 +392,7 @@ enum INPUT_FILE_TYPE {
     TYPE_EQN,        /* equation .eqn file */
     TYPE_RTFD,       /* .rtfd file */
     TYPE_RAWEQN,     /* like .eqn file but without OLE wrapper */
-    TYPE_UNKNOWN  
+    TYPE_UNKNOWN
 };
 
 extern enum INPUT_FILE_TYPE g_input_file_type;

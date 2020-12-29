@@ -11,7 +11,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
@@ -34,7 +34,7 @@ typedef unsigned char boolean;
 #if defined(UNIX)
     # define    PATH_SEP    '/'
     # define    ENV_SEP     ':'
-#else 
+#else
     # define    PATH_SEP    '\\'
     # define    ENV_SEP     ';'
 #endif
@@ -58,11 +58,11 @@ enum objClass {unknownObjClass, EquationClass, WordPictureClass, MSGraphChartCla
 enum shapeObjectClass {unknownShapeObject, shapeObject, standardObject, shapePicture, shapeObjText};
 enum {left, center, right};
 enum {singleSpace, oneAndAHalfSpace, doubleSpace};
-typedef enum {tinySize, scriptSize, footNoteSize, smallSize, normalSize, 
+typedef enum {tinySize, scriptSize, footNoteSize, smallSize, normalSize,
             largeSize, LargeSize, LARGESize, giganticSize, GiganticSize} fontSize;
 enum cellVerticalMergeFlag {mergeNone, mergeTop, mergeAbove};
 
-typedef struct 
+typedef struct
 {
     int count;
     int type;
@@ -130,7 +130,7 @@ typedef struct cellStruct
     int originalRight;
     int columnSpan;
     int index;
-    int verticalMerge;   
+    int verticalMerge;
     boolean leftBorder;
     boolean rightBorder;
     boolean topBorder;

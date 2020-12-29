@@ -82,9 +82,9 @@ __cole_extract_file(FILE ** file, char **filename, uint32_t size, uint32_t pps_s
 
     verboseS(*filename);
 
-    /* try to open the file */    
+    /* try to open the file */
     ret = fopen(*filename, "w+b");
-    
+
     /* if opening fails, then try again using tempnam() */
     if (ret == NULL) {
         free(*filename);
@@ -93,14 +93,14 @@ __cole_extract_file(FILE ** file, char **filename, uint32_t size, uint32_t pps_s
         ret = fopen(*filename, "w+b");
         if (*filename == NULL) return 2;
     }
-    
+
     *file = ret;
 
     if (ret == NULL) {
         free(*filename);
         return 3;
     }
-    
+
     if (size >= 0x1000) {
         /* read from big block depot */
         Offset = 1;
@@ -123,7 +123,7 @@ __cole_extract_file(FILE ** file, char **filename, uint32_t size, uint32_t pps_s
             free(*filename);
             return 4;
         }
-        
+
         bytes_to_copy = MIN(BlockSize, size);
         if (fseek(infile, FilePos, SEEK_SET)) {
             fclose(ret);
@@ -131,7 +131,7 @@ __cole_extract_file(FILE ** file, char **filename, uint32_t size, uint32_t pps_s
             free(*filename);
             return 4;
         }
-        
+
         (void) fread(Block, bytes_to_copy, 1, infile);
         if (ferror(infile)) {
             fclose(ret);
@@ -139,7 +139,7 @@ __cole_extract_file(FILE ** file, char **filename, uint32_t size, uint32_t pps_s
             free(*filename);
             return 5;
         }
-        
+
         (void) fwrite(Block, bytes_to_copy, 1, ret);
         if (ferror(ret)) {
             fclose(ret);
@@ -147,7 +147,7 @@ __cole_extract_file(FILE ** file, char **filename, uint32_t size, uint32_t pps_s
             free(*filename);
             return 6;
         }
-        
+
         pps_start = fil_sreadU32(Depot + (pps_start * 4));
         size -= MIN(BlockSize, size);
         if (size == 0)

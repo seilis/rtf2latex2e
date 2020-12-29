@@ -92,7 +92,7 @@ static int RTFBraceLevel(int level)
     return braceLevel;
 }
 
-static void RTFSetBraceLevel(int level) 
+static void RTFSetBraceLevel(int level)
 {
     (void) RTFBraceLevel(level);
 }
@@ -375,7 +375,7 @@ static void RTFDoGroup(int execute, int level)
 
     while (RTFGetToken() != rtfEOF) {
 
-        if (RTFGetBraceLevel() < level) 
+        if (RTFGetBraceLevel() < level)
             return;
 
         if (execute) RTFRouteToken();
@@ -442,7 +442,7 @@ void RTFExecuteParentheses(void)
     		if (rtfMajor == '(') parens++;
     		if (rtfMajor == ')') parens--;
     	}
-    	
+
         if (parens == 0) return;
 
         if (RTFGetBraceLevel() < level) return;
@@ -451,7 +451,7 @@ void RTFExecuteParentheses(void)
     }
 }
 
-/* 
+/*
  * return the next (non-space) word delimited by whitespace
  */
 char *RTFGetTextWord(void)
@@ -480,7 +480,7 @@ char *RTFGetTextWord(void)
     return strdup(word);
 }
 
-/* 
+/*
  * return text to next unmatched closing brace
  */
 char *RTFGetFieldContents(void)
@@ -501,12 +501,12 @@ char *RTFGetFieldContents(void)
             i++;
         	if (len >= 1023) break;
         }
-        
+
         if (rtfClass == rtfControl) {
         	fieldContents[len] = ' ';
         	len++;
         }
-        
+
         if (rtfClass == rtfGroup && rtfMajor == 0) braceCount++;
         if (rtfClass == rtfGroup && rtfMajor == 1) braceCount--;
 
@@ -591,7 +591,7 @@ short RTFPeekToken(void)
     return (rtfClass);
 }
 
-/* 
+/*
  * slow, slow lookup because binary search fails for me
  */
 static int find932Index(short value)
@@ -648,13 +648,13 @@ static void RTFSet932Token(unsigned char firstByte)
     } else {
         rtfClass = rtfControl;
         rtfMajor = rtfDestination;
-        rtfMinor = rtfUnicodeFake;  
+        rtfMinor = rtfUnicodeFake;
         rtfParam = cp932CharCode[index932];
     }
 //  fprintf(stderr,"value is %u, index is %d, index[%d]=%u, charcode[%d]=%u\n", value, index932, index932, (unsigned short) cp932Index[index932],index932, (unsigned short) cp932CharCode[index932]);
 }
 
-/* 
+/*
  * slow, slow lookup because binary search fails for me
  */
 static int find936Index(short value)
@@ -672,7 +672,7 @@ static int find936Index(short value)
 }
 
 static void RTFSet936Token(unsigned char firstByte)
-{   
+{
     int index936;
     unsigned int value;
     char *s1, *s2;
@@ -748,8 +748,8 @@ static void _RTFGetToken(void)
     }
 
     /* \cchs indicates any characters not belonging to the default document character
-     * set and tells which character set they do belong to. Macintosh character sets 
-     * are represented by values greater than 255. The values for N correspond to the 
+     * set and tells which character set they do belong to. Macintosh character sets
+     * are represented by values greater than 255. The values for N correspond to the
      * values for the \ fcharset control word.
      */
     if (RTFCheckCMM(rtfControl, rtfCharAttr, rtfCharCharSet)) {
@@ -847,17 +847,17 @@ static void _RTFGetToken2(void)
     /* \<newline>text         ---> \par text */
     /* \<newline><spaces>text ---> \text */
     if (c == '\n' || c == '\r') {
-        while (c == '\n' || c == '\r')  
+        while (c == '\n' || c == '\r')
             c = GetChar();
 
         if (1||c != ' ') {
             pushedChar = c;
             strcpy(rtfTextBuf,"\\par");
-            Lookup("\\par"); 
+            Lookup("\\par");
             return;
         }
 
-        while (c == ' ') 
+        while (c == ' ')
             c = GetChar();
 
         rtfTextBuf[1] = c;
@@ -905,7 +905,7 @@ static void _RTFGetToken2(void)
             rtfMajor = rtfEquationFieldCmd;
 
 			/* special escaping for characters not used as syntax */
-			if (rtfMinor == ',' || rtfMinor == '(' || rtfMinor == ')' || 
+			if (rtfMinor == ',' || rtfMinor == '(' || rtfMinor == ')' ||
 			                       rtfMajor == '[' || rtfMajor == ']')
             	rtfMajor = rtfEquationFieldLiteral;
             return;
@@ -1241,10 +1241,10 @@ static void ReadFontTbl(void)
 
                 /*fprintf(stderr,"%05d fontname=%s\n",fp->rtfFNum, buf); */
 
-                fp->rtfFName = RTFStrSave(buf);     
+                fp->rtfFName = RTFStrSave(buf);
                 if (fp->rtfFName == NULL)
                     RTFPanic("%s: cannot allocate font name", fn);
-				
+
 				/* Symbol font is unlike all others*/
                 if (strcasecmp(fp->rtfFName,"Symbol")==0)
                     fp->rtfFCharCode = symCharCode;
@@ -1360,7 +1360,7 @@ static short Style2LatexItem(char *name)
     int i;
 
     for (i = 0; i < MAX_STYLE_MAPPINGS; i++) {
-        if (!Style2LatexStyle[i]) return -1; 
+        if (!Style2LatexStyle[i]) return -1;
 
         if (strcasecmp(name, Style2LatexStyle[i]) == 0)
             return i;

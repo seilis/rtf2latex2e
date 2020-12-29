@@ -139,7 +139,7 @@ static short InitStyleTranslationMap(void)
         if (buf[0] == '#') continue;     /* skip comment lines */
 
         TSScanInit(buf);
-        
+
         styleString = TSScan();
         if (!styleString) continue;             /* skip blank lines */
 
@@ -148,7 +148,7 @@ static short InitStyleTranslationMap(void)
 
         closeString = TSScan();
         if (!closeString) continue;             /* skip incomplete definition */
-        
+
         Style2LatexOpen[i] = strdup(openString);
         Style2LatexClose[i] = strdup(closeString);
         Style2LatexStyle[i] = strdup(styleString);
@@ -185,7 +185,7 @@ static void setPref(const char *name, const char *value)
     int n = GetPreferenceNum(name);
 
     if (n == -1) return;
-    
+
     if (n == pOutputMapFileName) {
     	if (outputMapFileName) free(outputMapFileName);
         outputMapFileName = strdup(value);
@@ -232,7 +232,7 @@ short ReadPrefFile(char *file)
     char *scanEscape;
 
     f = RTFOpenLibFile(file, "rb");
-    if (!f) 
+    if (!f)
         return 0;
 
     /*
@@ -256,7 +256,7 @@ short ReadPrefFile(char *file)
 
         setPref(name,seq);
     }
-    
+
     scanner.scanEscape = scanEscape;
     TSSetScanner(&scanner);
     fclose(f);
@@ -320,7 +320,7 @@ short RTFReadOutputMap(char *file, char *thisOutMap[], short reinit)
 
     /* (over) allocate space for preambleEncoding */
 	fseek(f, 0, SEEK_END);
-	size = ftell(f); 
+	size = ftell(f);
 	fseek(f, 0, SEEK_SET);
 	preambleEncoding = malloc(size);
 	preambleEncoding[0] = '\0';
@@ -330,7 +330,7 @@ short RTFReadOutputMap(char *file, char *thisOutMap[], short reinit)
         if (buf[0] == '#')      /* skip comment lines */
             continue;
         TSScanInit(buf);
-        
+
         /* check for any special requirements */
         if (buf[0] == '%') {
             if (strcmp((name = TSScan()), "%") == 0)
@@ -339,21 +339,21 @@ short RTFReadOutputMap(char *file, char *thisOutMap[], short reinit)
             strcat(preambleEncoding, "\n");
             continue;
         }
-        
+
         if ((name = TSScan()) == NULL)
             continue;           /* skip blank lines */
-            
+
         if ((stdCode = RTFStdCharCode(name)) < 0) {
             RTFMsg("%s: unknown character name: %s\n", fn, name);
             continue;
         }
-        
+
         if ((seq = TSScan()) == NULL) {
             RTFMsg("%s: malformed output sequence line for character %s\n",
                    fn, name);
             continue;
         }
-        
+
         if ((seq = RTFStrSave(seq)) == NULL)
             RTFPanic("%s: out of memory", fn);
         thisOutMap[stdCode] = seq;
@@ -425,7 +425,7 @@ static short RTFReadCharSetMap(char *file, short *stdCodeArray)
 
     /* clobber current mapping */
 
-    for (i = 0; i < CHAR_SET_SIZE; i++) 
+    for (i = 0; i < CHAR_SET_SIZE; i++)
         stdCodeArray[i] = rtfSC_nothing;
 
     /*
@@ -553,7 +553,7 @@ static void InitCharSets(void)
 
     if (!RTFReadCharSetMap("rtf-encoding.symbolfont", symCharCode))
         RTFPanic("Cannot read character mapping for Adobe symbol code page!\n");
-        
+
     read932CharCodes();
     read936CharCodes();
 }
@@ -569,11 +569,11 @@ static void InitUserText(void)
 
     	/* (over) allocate and read user-defined preamble text */
 		fseek(f, 0, SEEK_END);
-		size = ftell(f); 
+		size = ftell(f);
 		fseek(f, 0, SEEK_SET);
 		preambleUserText = malloc(size);
 		preambleUserText[0] = '\0';
-	
+
 		while (fgets(buf, (int) sizeof(buf), f) != NULL) {
 			if (buf[0] == '#') continue;  /* skip comment lines */
 			if (buf[0] == '\0') continue; /* skip blank lines */
@@ -768,7 +768,7 @@ char *strdup_together(const char *s, const char *t)
 {
     char *both;
     size_t siz;
-    
+
     if (s == NULL) {
         if (t == NULL)
             return NULL;
@@ -794,15 +794,15 @@ char * append_file_to_path(char *path, char *file)
 {
     char *s, *t;
     int len;
-    
+
     if (file == NULL) return NULL;
-        
+
     if (path == NULL) return strdup(file);
-    
+
     len = strlen(path);
     if (path[len] == PATH_SEP)
         return strdup_together(path,file);
-    
+
     /* need to insert PATH_SEP */
     s = malloc(len+2);
     strcpy(s,path);
@@ -810,7 +810,7 @@ char * append_file_to_path(char *path, char *file)
     s[len+1]='\0';
     t = strdup_together(s,file);
     free(s);
-    return t;   
+    return t;
 }
 
 
@@ -865,7 +865,7 @@ FILE *OpenLibFile(char *name, char *mode)
         }
         free(env_path);
     }
-    
+
     /* last resort.  try PREFS_DIR from compile time */
     lib_path = strdup(PREFS_DIR);
     if (lib_path) {
@@ -899,7 +899,7 @@ FILE *OpenLibFile(char *name, char *mode)
 	fprintf(stderr, "   (3) recompile rtf2latex2e (after modifying datadir in Makefile)\n");
 	fprintf(stderr, "Giving up.  Please don't hate me.\n");
 	exit(1);
-    
+
     return NULL;
 }
 
@@ -911,11 +911,11 @@ FILE *OpenLibFile(char *name, char *mode)
 void InitConverter(void)
 {
     RTFSetOpenLibFileProc(OpenLibFile); /* install routine for opening library files */
-    
+
 	InitCharSets();
 	InitControlWordLookupTable();
 	InitUserPrefs();
-	
+
 	InitUserText();
 	InitLatexEncoding();
 

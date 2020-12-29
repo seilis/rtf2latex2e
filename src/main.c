@@ -49,7 +49,7 @@ int   g_shouldIncludePreamble= 1;
 enum INPUT_FILE_TYPE g_input_file_type;
 
 /* Figure out endianness of machine.  Needed for OLE & graphics support */
-static void 
+static void
 SetEndianness(void)
 {
     unsigned int    endian_test = (unsigned int) 0xaabbccdd;
@@ -59,7 +59,7 @@ SetEndianness(void)
 }
 
 
-static void 
+static void
 print_version(void)
 {
     fprintf(stdout, "rtf2latex2e %s\n\n", VERSION);
@@ -68,7 +68,7 @@ print_version(void)
     fprintf(stdout, "warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n");
 }
 
-static void 
+static void
 print_usage(void)
 {
     fprintf(stdout, "rtf2latex2e %s - convert RTF to LaTeX.\n", VERSION);
@@ -121,20 +121,20 @@ print_usage(void)
 static enum INPUT_FILE_TYPE identify_filename(char *name)
 {
     int len;
-    
+
     if (!name) return TYPE_UNKNOWN;
-    
+
     len = strlen(name);
-    
+
     if (len > 5 && strcasecmp(name+len-5,".rtfd")==0)
         return TYPE_RTFD;
-        
+
     if (len > 4 && strcasecmp(name+len-4,".rtf")==0)
         return TYPE_RTF;
-        
+
     if (len > 4 && strcasecmp(name+len-4,".eqn")==0)
         return TYPE_EQN;
-        
+
     if (len > 4 && strcasecmp(name+len-4,".rqn")==0)
         return TYPE_RAWEQN;
 
@@ -147,10 +147,10 @@ static char * establish_filename(char * name)
     FILE *fp;
     char *s;
     int len;
-    
+
     g_input_file_type = TYPE_UNKNOWN;
     if (!name) return NULL;
-    
+
     /* try .rtfd case first because simple fopen() test below misses this case */
     len = strlen(name) - 5;
     if (len > 0 && strcasecmp(name + len,".rtfd") == 0) {
@@ -165,14 +165,14 @@ static char * establish_filename(char * name)
         fprintf(stderr,"* RTFD directory found, but no TXT.rtf file inside!\n");
         return NULL;
     }
-    
+
     fp = fopen(name, "rb");
     if (fp) {
         fclose(fp);
         g_input_file_type = identify_filename(name);
         return strdup(name);
     }
-    
+
     s = strdup_together(name, ".rtf");
     fp = fopen(s, "rb");
     if (fp) {
@@ -194,7 +194,7 @@ static char * establish_filename(char * name)
             g_input_file_type = TYPE_RTFD;
             return s;
         }
-        
+
         return s;
         fprintf(stderr,"* RTFD directory found, but no TXT.rtf file inside!\n");
         return NULL;
@@ -218,7 +218,7 @@ static char * short_name(char *path)
 {
     char *s;
     s = strrchr(path,PATH_SEP);
-    if (s == NULL) 
+    if (s == NULL)
         return strdup(path);
     else
         return strdup(s+1);
@@ -233,21 +233,21 @@ static char * make_output_filename(char * name)
 {
     char *s, *dir, *file, *out;
     if (!name) return NULL;
-    
+
     /* always create a new folder for RTFD files */
     if (g_input_file_type == TYPE_RTFD) {
 
         dir = malloc(strlen(name)+strlen("-latex"));
         strcpy(dir,name);
         s = strstr(dir, ".rtfd");
-        if (!s) 
+        if (!s)
         	s = strstr(dir, ".RTFD");
 
         if (s)
         	strcpy(s,"-latex");
         else
         	strcat(dir,"-latex");
-        
+
         mkdir(dir, 0755);
         out = append_file_to_path(dir,"TXT.ltx");
         return out;
@@ -257,27 +257,27 @@ static char * make_output_filename(char * name)
         s = strdup(name);
         strcpy(s+strlen(s)-4, ".ltx");
         return s;
-    } 
-    
+    }
+
     if (g_input_file_type == TYPE_RTF || g_input_file_type == TYPE_RTFD) {
-        file = short_name(name);        
+        file = short_name(name);
         strcpy(file+strlen(file)-4, ".ltx");
 
         dir = malloc(strlen(name)+strlen("-latex"));
         strcpy(dir,name);
         strcpy(dir+strlen(dir)-4,"-latex");
-        
+
         mkdir(dir, 0755);
         out = append_file_to_path(dir,file);
         return out;
     }
-    
+
     return NULL;
 }
 
 void ExamineToken(void);
 
-int 
+int
 main(int argc, char **argv)
 {
     char            c, *input_filename, *output_filename;
@@ -391,7 +391,7 @@ main(int argc, char **argv)
         eqn_start_display = strdup("\\[");
         eqn_end_display = strdup(" \\]\n");
         }
-    
+
     if (cli_table >= 0) {
         prefs[pConvertTableWidths]    = cli_table & 1;
         prefs[pConvertTableAlignment] = cli_table & 2;
@@ -401,27 +401,27 @@ main(int argc, char **argv)
     for (fileCounter = 0; fileCounter < argc; fileCounter++) {
 
         RTFInit();
-        
+
         input_filename = establish_filename(argv[fileCounter]);
-    	
+
     	if (g_input_file_type == TYPE_RTFD)
     		g_create_new_directory = 1;
-    		
+
         if (g_input_file_type == TYPE_UNKNOWN) {
             if (!input_filename)
                 RTFMsg("* Skipping non-existent file '%s'\n", argv[fileCounter]);
-            else 
+            else
                 RTFMsg("* Skipping non-RTF file '%s'\n", argv[fileCounter]);
             if (input_filename) free(input_filename);
             continue;
         }
-        
+
         ifp = fopen(input_filename, "rb");
         if (!ifp) {
             RTFPanic("* Cannot open input file %s\n", input_filename);
             exit(1);
         }
-        
+
         RTFSetInputName(input_filename);
         RTFSetStream(ifp);
 
@@ -439,7 +439,7 @@ main(int argc, char **argv)
             fseek(ifp, cursorPos, 0);
         }
         RTFInit();
-        
+
         output_filename = make_output_filename(input_filename);
 
         ofp = fopen(output_filename, "wb+");
@@ -454,7 +454,7 @@ main(int argc, char **argv)
 
         fprintf(stderr, "Processing %s\n", input_filename);
         if (BeginLaTeXFile()) {
-            if (g_input_file_type == TYPE_EQN) 
+            if (g_input_file_type == TYPE_EQN)
                 (void) ConvertEquationFile(input_filename);
             else if (g_input_file_type == TYPE_RAWEQN) {
                 (void) ConvertRawEquationFile(input_filename);
@@ -463,7 +463,7 @@ main(int argc, char **argv)
                 RTFRead();
             EndLaTeXFile(); /* closes ofp */
         }
-        
+
         fclose(ifp);
         free(input_filename);
         free(output_filename);

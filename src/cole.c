@@ -16,7 +16,7 @@
    along with this program; if not, write to the Free Software
    Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
- 
+
 #include "cole_support.h"
 #include "cole.h"
 #include <stdlib.h>
@@ -92,7 +92,7 @@ void cole_perror(const char *s, COLERRNO colerrno, char *filename)
 /**
  * cole_mount:
  * filename: name of the file with the filesystem.
- * colerrno: error value (COLE_EMEMORY, COLE_EOPENFILE, COLE_ENOFILESYSTEM, 
+ * colerrno: error value (COLE_EMEMORY, COLE_EOPENFILE, COLE_ENOFILESYSTEM,
  *                         COLE_EINVALIDFILESYSTEM, COLE_EUNKNOWN).
  *
  * Mounts the filesystem which is in filename.
@@ -206,13 +206,13 @@ void cole_print_tree(COLEFS * colefilesystem, COLERRNO * colerrno)
 {
     int32_t level = 1;
 
-    (void) cole_recurse_tree(colefilesystem, 
+    (void) cole_recurse_tree(colefilesystem,
                           &level,
                           & __cole_print_tree_inroot,
                           & __cole_print_tree_indirentry,
                           & __cole_print_tree_indir,
-                          & __cole_print_tree_outdir, 
-                          NULL, 
+                          & __cole_print_tree_outdir,
+                          NULL,
                           colerrno);
 }
 
@@ -252,7 +252,7 @@ int __cole_print_tree_inroot(COLEDIR * cd, void *info, COLERRNO * colerrno)
     printf(" %08x-%08x %08x-%08x",
            (unsigned int)cole_dir_getdays1(cd),
            (unsigned int)cole_dir_getsec1(cd),
-           (unsigned int)cole_dir_getdays2(cd), 
+           (unsigned int)cole_dir_getdays2(cd),
            (unsigned int)cole_dir_getsec2(cd));
     entry_name = cole_dir_getname(cd);
     if (!isprint(entry_name[0]))
@@ -294,7 +294,7 @@ __cole_print_tree_indirentry(COLEDIRENT * cde, void *info,
     printf(" %08x-%08x %08x-%08x",
            (unsigned int)cole_direntry_getdays1(cde),
            (unsigned int)cole_direntry_getsec1(cde),
-           (unsigned int)cole_direntry_getdays2(cde), 
+           (unsigned int)cole_direntry_getdays2(cde),
            (unsigned int)cole_direntry_getsec2(cde));
     entry_name = cole_direntry_getname(cde);
     if (!isprint(entry_name[0]))
@@ -760,7 +760,7 @@ uint32_t cole_ftell(COLEFILE * colefile)
  * @delta: number of bytes that the file position indicator will be moved.
  * @direction: from where start to count the @delta bytes.
  * @colerrno: error value (COLE_EFSEEKDELTA).
- * 
+ *
  * Sets the value of the file position indicator for the file @colefile
  * @delta bytes from the beginning of the file, forward from the current
  * position, backward from the current position, or from the end of the
@@ -824,7 +824,7 @@ cole_fseek(COLEFILE * colefile, uint32_t delta, COLE_SEEK_FLAG direction, COLERR
  * cole_frewind:
  * @colefile: file of which its file position indicator will be rewind.
  * @colerrno: error value (error from call cole_fseek()).
- * 
+ *
  * Sets the value of the file position indicator for the file @colefile
  * in the beginning of the file.
  *
@@ -842,7 +842,7 @@ int cole_frewind(COLEFILE * colefile, COLERRNO * colerrno)
 /**
  * cole_fsize:
  * @colefile: file of which its size will be returned.
- * 
+ *
  * Returns the size in bytes of the file @colefile.
  */
 uint32_t cole_fsize(COLEFILE * colefile)
@@ -1108,7 +1108,7 @@ __cole_locate_filename_indirentry(COLEDIRENT * cde, void *_info, COLERRNO * cole
             return 0;           /* don't break recurse */
         }
     }
-    
+
     switch (*pentry_name) {
     case 0:
         switch (*pcurrent) {

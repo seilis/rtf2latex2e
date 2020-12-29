@@ -3,19 +3,19 @@
  * my_getopt  is supposed to emulate the C Library getopt (which, according
  * to the man pages, is written by Henry Spencer to emulate the Bell Lab
  * version).
- * 
+ *
  * my_getopt is scanning argv[optind] (and, perhaps, following arguments),
  * looking for the first option starting with `-' and a character from
  * optstring[]. Therefore, if you are looking for options in argv[1] etc.,
  * you should initialize optind with 1 (not 0, as the manual erroneously
  * claims).
- * 
+ *
  * Experiments with getopt() established that when an argument consists of more
  * than one option, getopt() stores the pointer to the beginning of the
  * argument as a static variable, for re-use later.
- * 
+ *
  * See the getopt manual pages for more information on getopt.
- * 
+ *
  * Written by V.Menkov, IU, 1995
  */
 
@@ -38,7 +38,7 @@ int my_getopt(int argc, char **argv, char *optstring)
 
 /*    fprintf(stderr, "Processing option `%s'", argv[optind]);*/
 
-    /* 
+    /*
      * printf("optind = %d\n", optind);  if (rem) printf("rem=`%s'\n",
      * rem);
      */

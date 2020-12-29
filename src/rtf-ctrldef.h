@@ -1033,9 +1033,9 @@
 /*
  * List attributes. List should actually be defined as a destination.
  */
- 
+
 # define	rtfListAttr	28
- 
+
 # define		rtfList	719
 # define		rtfListTable	720
 # define		rtfListOverrideTable	721

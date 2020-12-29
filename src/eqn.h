@@ -39,7 +39,7 @@ typedef struct {
 
     char indent[128];
     int log_level;
-    
+
     MT_CHARSET_ATTS *atts_table;
     char **m_atts_table;
     char **m_char_table;

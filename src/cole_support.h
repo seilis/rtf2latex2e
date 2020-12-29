@@ -1,6 +1,6 @@
 /*
    Support - Provides some big and little endian abstraction functions.
-   Copyright (C) 1999  Roberto Arturo Tena Sanchez  
+   Copyright (C) 1999  Roberto Arturo Tena Sanchez
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
   Some code was from Caolan, but I have replaced all the code,
   now all code here is mine, so I changed copyright announce in cole-1.0.0.
      Arturo Tena
-     
+
   This has been merged with the internal.h file
  */
 
@@ -166,7 +166,7 @@ struct pps_block
     uint32_t previous;		 /* previous pps, valid before reordering */
     uint32_t ppsnumber;		 /* pps number */
   };
-  
+
 typedef struct pps_block pps_entry;
 
 int __OLEdecode (char *OLEfilename, pps_entry ** stream_list, size_t * root,

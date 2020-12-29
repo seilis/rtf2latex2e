@@ -118,7 +118,7 @@ int i = 0;
 	if (majorCount == 0) return (0);
 	for (i = 0; i < majorCount; i++)
 	{
-		if (strcmp(rememberFld[i], fld[0]) == 0) 
+		if (strcmp(rememberFld[i], fld[0]) == 0)
 		{
 			defined = rememberMajor[i];
 			return (1);
@@ -182,7 +182,7 @@ char		*scanEscape;
 		fprintf (stderr, "Cannot open output file %s\n", rtfCtrlDef);
 		exit (1);
 	}
-	
+
 	printf ("/* The following defines are automatically generated from %s */\n",
 															ctrlInputFile);
 	printf ("/* Do not edit. */\n\n");
@@ -220,7 +220,7 @@ char		*scanEscape;
 		if (strcmp (p, "major") == 0)
 		{
 			Tokenize ();
-			if (majorCount < (maxMajors - 1)) 
+			if (majorCount < (maxMajors - 1))
 			{
 				strcpy(rememberFld[majorCount], fld[0]);
 				rememberMajor[majorCount] = curMajor;
@@ -230,7 +230,7 @@ char		*scanEscape;
 
 			if (nFlds != 1)
 				continue;
-			if (Defined () == 0) 
+			if (Defined () == 0)
 			{
 				printf ("# define\t%s\t%hd\n", fld[0], curMajor++);
 				majorCount++;
@@ -355,7 +355,7 @@ char		*scanEscape;
 		fprintf (stderr, "Cannot open output file %s\n", rtfNameTab);
 		exit (1);
 	}
-	
+
 	fprintf (of1, "/* The following defines are automatically generated from %s */\n",
 															nameInputFile);
 	fprintf (of1, "/* They must be sequential beginning from zero */\n");

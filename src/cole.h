@@ -84,7 +84,7 @@ int      cole_locate_filename   (COLEFS *colefilesystem,
                     void *info,
                     COLE_LOCATE_ACTION_FUNC *action,
                     COLERRNO *colerrno);
-                    
+
 int      cole_recurse_tree  (COLEFS *colefilesystem,
                     void *info,
                     COLE_RECURSE_DIR_FUNC *inroot,
